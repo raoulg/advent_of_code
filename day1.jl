@@ -4,7 +4,6 @@ function get_stars(f)
     stars, line
 end
 
-
 function gather(filename) 
     open(filename) do f
         elve_stars = []
@@ -20,6 +19,6 @@ function gather(filename)
     end
 end
 
-stars = gather("day1.txt")
+stars = gather("data/day1.txt")
 elve_stars = sort(stars, by = x -> x[end], rev=true)
 sum(elve_stars[1:3])

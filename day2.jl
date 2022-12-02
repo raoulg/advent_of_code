@@ -5,28 +5,17 @@ decode = Dict(
     "X" => Rock, "Y" => Paper, "Z" => Scissors,
     )
 
-
 function Base.:>(x::Round, y::Round)
-    if (x == Rock) & (y == Scissors)
-        true
-    elseif (x == Scissors) & (y == Rock)
-        false
-    else
-        Int(x) > Int(y)
-    end
+    (x == Rock) & (y == Scissors) ? true :
+    (x == Scissors) & (y == Rock) ? false :
+    Int(x) > Int(y)
 end
 
 Base.:<(x::Round, y::Round) = y > x
 
-
 function score(x::Round, y::Round)
-    if x == y
-        return Int(y) + 3
-    elseif x < y
-        return Int(y) + 6
-    else
-        return Int(y)
-    end
+    x == y ? Int(y) + 3 : 
+    x < y ? Int(y) + 6 : Int(y)
 end
 
 function parse_score(filename)
@@ -38,7 +27,7 @@ function parse_score(filename)
     total
 end
 
-parse_score("day2.txt")
+parse_score("data/day2.txt")
 
 function figure_out(x::Round, f)
     for y in instances(Round)
@@ -52,6 +41,7 @@ decode2 = Dict(
     "A" => Rock, "B" => Paper, "C" => Scissors,
     "X" => >, "Y" => ==, "Z" => <,
     )
+
 function parse_score2(filename)
     total = 0
     for line in readlines(open(filename))
@@ -62,5 +52,5 @@ function parse_score2(filename)
     total
 end
 
-parse_score2("day2.txt")
+parse_score2("data/day2.txt")
 
