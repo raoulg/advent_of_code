@@ -23,7 +23,7 @@ end
 
 
 function run(filename, cratemover)
-    schema, moves_string = split(rstrip(read(open(filename), String)), "\n\n")
+    schema, moves_string = split(rstrip(read(filename), String), "\n\n")
     stacks = get_stacks(schema)
     moves = parse_moves(moves_string)
     for move in moves

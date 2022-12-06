@@ -55,4 +55,4 @@ end
 parse_score2("data/2.txt")
 
 # oneliner
-sum([(Int(m)-87 .+ [6,0,3,6,0])[Int(m) - Int(o) - 20] for (o, _, m) in readlines(open("data/2.txt"))])
+sum([(Int(m)-87 .+ [6,0,3,6,0])[Int(m) - Int(o) - 20] for (o, _, m) in readlines("data/2.txt")])
