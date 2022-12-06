@@ -19,6 +19,6 @@ function gather(filename)
     end
 end
 
-stars = gather("data/day1.txt")
+stars = gather("data/1.txt")
 elve_stars = sort(stars, rev=true)
 sum(elve_stars[1:3])

@@ -27,7 +27,7 @@ function parse_score(filename)
     total
 end
 
-parse_score("data/day2.txt")
+parse_score("data/2.txt")
 
 function figure_out(x::Round, f)
     for y in instances(Round)
@@ -52,7 +52,7 @@ function parse_score2(filename)
     total
 end
 
-parse_score2("data/day2.txt")
+parse_score2("data/2.txt")
 
-
-sum([(Int(m)-87 .+ [6,0,3,6,0])[Int(m) - Int(o) - 20] for (o, _, m) in readlines(open("data/day2.txt"))])
+# oneliner
+sum([(Int(m)-87 .+ [6,0,3,6,0])[Int(m) - Int(o) - 20] for (o, _, m) in readlines(open("data/2.txt"))])
