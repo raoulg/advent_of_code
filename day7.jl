@@ -1,19 +1,19 @@
 # Tree data structures
 
-struct Leave{T<: AbstractString}
+struct Leave{T<:AbstractString}
     name::T
     size::Int
 end
 
 mutable struct Node
     name::String
-    parent::Union{Node, Nothing}
+    parent::Union{Node,Nothing}
     children::Array{Node}
     files::Array{Leave}
     size::Int
 end
 
-Node(name::T) where T <: AbstractString = Node(name, nothing, [], [], 0)
+Node(name::T) where {T<:AbstractString} = Node(name, nothing, [], [], 0)
 
 struct Tree
     root::Node
@@ -94,8 +94,8 @@ function walk_tree(node, limit, total, op)
         total += node.size
         push!(options, node)
     end
-    for c in node.children 
-            total = walk_tree(c, limit, total, op)
+    for c in node.children
+        total = walk_tree(c, limit, total, op)
     end
     total
 end
@@ -110,5 +110,15 @@ unused = 7e7 - tree.root.size
 limit = 3e7 - unused
 options = []
 walk_tree(tree.root, limit, 0, >=)
-sort!(options, by= x->x.size);
+sort!(options, by=x -> x.size);
 options[1].size
+
+# Code Golf
+z,p,d = readlines("data/7.txt"), [], Dict();
+map(x -> x[end] == '.' ? pop!(p) : 
+    x[3] == 'c' ? d[join(push!(p, x[6:end]))] = 0 : 
+    isdigit(x[1]) ? 
+    [d[join(p[1:i])] += parse(Int, split(x)[1]) for i in 1:length(p)]
+    : nothing, z)
+sum([v for v in values(d) if v<= 1e5])
+sort([v for v in values(d) if v>= d["/"]-4e7])[1]
