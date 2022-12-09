@@ -16,7 +16,6 @@ function simulate(lines, Head, Tail, visited)
     end
     length(visited)
 end
-simulate(lines, (0,0), (0,0), [])
 
 function follow(Head::Tuple, Tail::Vector)
     Tail[1] = follow(Head, Tail[1])
@@ -27,6 +26,6 @@ function follow(Head::Tuple, Tail::Vector)
 end
 add!(visited, tail::Vector) = add!(visited, tail[end])
 
-Head = (0,0)
-Tail = [(0,0) for _ in 1:9]
-simulate(lines, Head, Tail, [])
+simulate(lines, (0,0), (0,0), [])
+simulate(lines, (0,0), [(0,0) for _ in 1:9], [])
+
