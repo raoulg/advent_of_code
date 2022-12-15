@@ -10,3 +10,17 @@ open("out.txt", "w") do f
         write(f, line)
     end
 end
+
+
+using GeometryBasics
+using AlgebraOfGraphics
+using CairoMakie
+
+
+geometry = [Rect(Vec(i, j), Vec(1, 1)) for i in 0:39 for j in 5:-1:0]
+geometry
+group = [i in j-1:j+1 ? "dark square" : "light square" for (i,j) in zip(repeat(0:39, 6), xs[1:end-1])]
+df = (; geometry, group)
+
+plt = data(df) * visual(Poly) * mapping(:geometry, color = :group)
+draw(plt; axis=(aspect=1,))
