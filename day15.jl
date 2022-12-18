@@ -42,6 +42,7 @@ function covered(Cover, row)
 end
 
 
+
 # given lines of text, split them, and build S and B Coord from it
 # from those pairs, create covers
 function build_covers(lines)
@@ -68,6 +69,8 @@ row = 2000000
 @time k = count_beacons(covers, row)
 r = maxrange(check_row(covers, row))
 length(r) - length(k)
+
+
 
 function check_rowrange(m, n)
     for row in m:n
@@ -97,3 +100,46 @@ end
 lines = readlines("data/15.txt")
 covers = build_covers(lines)
 @time check_rowrange(0, 4000000)
+
+function get_c(c, row)
+    res = c.d - abs(c.S.y - row)
+    if res > 0
+        min = maximum([c.S.x - res, 0]) 
+        max = minimum([c.S.x + res, 4000000])
+        return min, max
+    end
+    nothing
+end
+make_d(c, n, m) = Dict(r => get_c(c, r) for r in n:m if !isnothing(get_c(c,r)))
+@time cdict = [make_d(c, 0, 4000000) for c in covers]
+
+fast_range(cdict, row) = sort([d[row] for d in cdict if row in keys(d)])
+ranges = fast_range(cdict, 0)
+
+function fast_rowrange(n, m)
+    cdict = [make_d(c, n, m) for c in covers]
+    for row in n:m
+        if row % 50000== 0
+            @info "row # $row"
+        end
+        ranges = fast_range(cdict, row)
+        big = last(ranges[1])
+        for i in 2:lastindex(ranges)
+            r = ranges[i]
+            if last(r) > 4000000
+                break
+            end
+            if big > last(r)
+                continue
+            elseif big >= first(r) -1
+                big = last(r)
+            else
+                @info "Row: $row, big: $big, r: $r"
+                @info "$(row + (big+1) * 4000000)"
+                return nothing
+            end
+        end
+    end
+end
+
+@time fast_rowrange(0, 4000000)
